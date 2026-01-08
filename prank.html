@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEM TERINFEKSI</title>
+    <style>
+        /* Efek Dasar */
+        body, html {
+            background-color: #000;
+            color: #ff0000;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+            cursor: none;
+        }
+
+        /* Animasi Layar Bergetar Parah (Glitch) */
+        @keyframes shake {
+            0% { transform: translate(0,0) scale(1); filter: hue-rotate(0deg); }
+            10% { transform: translate(-10px, 5px) scale(1.05); filter: hue-rotate(90deg); }
+            20% { transform: translate(10px, -5px) scale(0.95); }
+            30% { transform: translate(-5px, -10px) rotate(1deg); }
+            100% { transform: translate(0,0); }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            animation: shake 0.1s infinite; /* Membuat layar terus bergetar */
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-transform: uppercase;
+            margin: 0;
+            background: red;
+            color: black;
+            padding: 10px 20px;
+        }
+
+        .stats {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            line-height: 1.5;
+            text-align: left;
+            width: 80%;
+        }
+
+        /* Garis-garis rusak (TV Static) */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.1),
+                rgba(0, 0, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+        }
+
+        /* Pesan berjalan cepat */
+        .scrolling-text {
+            position: absolute;
+            bottom: 0;
+            white-space: nowrap;
+            font-size: 2rem;
+            animation: scroll 2s linear infinite;
+        }
+
+        @keyframes scroll {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body onclick="startPrank()">
+
+    <div class="overlay"></div>
+
+    <div class="container" id="main">
+        <h1>⚠️ SYSTEM FAILURE ⚠️</h1>
+        <div class="stats" id="log">
+            > MENGAKSES ROOT... <br>
+            > MENGUNDUH DATA PRIBADI... <br>
+            > MENGHAPUS FOLDER DCIM... <br>
+            > AKUN GOOGLE TERDETEKSI... <br>
+            > MENGIRIM LOKASI KE SERVER... <br>
+        </div>
+        <div class="scrolling-text">VIRUS DETECTED - VIRUS DETECTED - VIRUS DETECTED</div>
+    </div>
+
+    <audio id="alarm">
+        <source src="data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU9vT18A/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f3" type="audio/wav">
+    </audio>
+
+    <script>
+        // Fungsi untuk membuat suara "Beep" alarm malware asli
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playAlarm() {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sawtooth'; // Suara kasar seperti alarm rusak
+            osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            // Efek suara naik turun (siu-siu-siu)
+            osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.5);
+            osc.start();
+            
+            setInterval(() => {
+                osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.5);
+            }, 600);
+        }
+
+        function startPrank() {
+            // Mainkan suara
+            playAlarm();
+            
+            // Tambahkan teks log secara acak
+            const logBox = document.getElementById('log');
+            const fakeTasks = [
+                "> MENGHANCURKAN ENKRIPSI...",
+                "> MENCURI CHAT WHATSAPP...",
+                "> MENGUNGGAH GALERI KE CLOUD...",
+                "> CPU OVERHEATING!!!",
+                "> POWER SUPPLY CRITICAL!"
+            ];
+
+            setInterval(() => {
+                let p = document.createElement('div');
+                p.innerHTML = fakeTasks[Math.floor(Math.random() * fakeTasks.length)];
+                logBox.appendChild(p);
+                if (logBox.children.length > 10) logBox.removeChild(logBox.firstChild);
+            }, 500);
+
+            // Munculkan alert Akhir setelah 10 detik
+            setTimeout(() => {
+                alert("MAMPUS DATA LU DW😹\n\nTHANKS DER😹 BY D GANTENG.");
+                location.reload();
+            }, 10000);
+        }
+
+        // Paksa klik di mana saja untuk mulai (Syarat Browser untuk suara)
+        window.onload = () => {
+            alert("SISTEM ERROR! KLIK 'OKE' UNTUK MEMPERBAIKI");
+        };
+    </script>
+</body>
+</html>
